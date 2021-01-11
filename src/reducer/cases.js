@@ -32,12 +32,6 @@ export default function caseReducer(state = initialState, action) {
 
             const deathForToday = action.payload.map(c => c['Deaths - newly reported in last 24 hours']);
 
-            const lastWeekineChartData = {
-                cases: [casesForLastWeek],
-                deaths: [ deathForLastWeek]
-            }
-            console.log(lastWeekineChartData);
-
             return {
                 ...state,
                 cases: action.payload,

@@ -11,12 +11,12 @@ import {
 import Homepage from './components/homepage';
 
 var firebaseConfig = {
-  apiKey: "AIzaSyA5Em2gU5WB4VX3_ixbJnSrLKQoGKOo0EE",
-  authDomain: "globalcovidtracking.firebaseapp.com",
-  projectId: "globalcovidtracking",
-  storageBucket: "globalcovidtracking.appspot.com",
-  messagingSenderId: "934077401916",
-  appId: "1:934077401916:web:02e452e929d8891706ac39"
+  apiKey: "AIzaSyBxlBMd1yTZI1rojkquGAaGoyvviFs1-fY",
+  authDomain: "covidglobaltracking.firebaseapp.com",
+  projectId: "covidglobaltracking",
+  storageBucket: "covidglobaltracking.appspot.com",
+  messagingSenderId: "665527789399",
+  appId: "1:665527789399:web:e3796cdef85a0172d94012"
 };
 
 const app = Firebase.initializeApp(firebaseConfig);

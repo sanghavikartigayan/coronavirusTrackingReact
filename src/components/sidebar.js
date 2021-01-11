@@ -22,6 +22,7 @@ const sidebar = (props) => {
                 {/* Sidebar Menu */}
                 <nav className="mt-2">
                     <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li className="nav-header m-2"> ANALYTICS</li>
                         <li className="nav-item">
                             <Link to={`/`}>
                                 <div style={{ color: '#c2c7d0' }} className={`nav-link ${ selectedTab === '/' ? 'active' : '' }`}>
@@ -30,19 +31,28 @@ const sidebar = (props) => {
                                 </div>
                             </Link>
                         </li>
+                        <li className="nav-header">DATA TABLE</li>
                         <li className="nav-item">
                             <Link to={`/cases`}>
                                 <div style={{ color: '#c2c7d0' }} className={`nav-link ${ selectedTab === '/cases' ? 'active' : '' }`}>
-                                    <i className="nav-icon fas fa-table" />
-                                    <p> Cases </p>
+                                    <i className="nav-icon fas fa-globe" />
+                                    <p> Global </p>
                                 </div>
                             </Link>
                         </li>
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                             <Link to={`/login`}>
                                 <div style={{ color: '#c2c7d0' }} className={`nav-link ${ selectedTab === '/login' ? 'active' : '' }`}>
                                     <i className="nav-icon fas fa-table" />
                                     <p> Login </p>
+                                </div>
+                            </Link>
+                        </li> */}
+                        <li className="nav-item">
+                            <Link to={`/ontarioStats`}>
+                                <div style={{ color: '#c2c7d0' }} className={`nav-link ${ selectedTab === '/login' ? 'active' : '' }`}>
+                                    <i className="nav-icon fas fa-city" />
+                                    <p> Onatrio </p>
                                 </div>
                             </Link>
                         </li>

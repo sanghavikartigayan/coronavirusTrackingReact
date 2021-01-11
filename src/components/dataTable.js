@@ -9,7 +9,9 @@ const dataTable = ({
     columns,
     pending,
     totalElements,
-    expandableRow
+    expandableRow,
+    defaultSortField,
+    fileNameForCsvDownload
 }) => {
 
     const [filteredcases, setFilteredCases] = useState(cases);
@@ -21,7 +23,7 @@ const dataTable = ({
     }, [cases, columns]);
 
     var today = moment().format("DD-MM-YY");
-    var fileName = `${ today }-worldwideData.csv`;
+    var fileName = `${ today }-${fileNameForCsvDownload}.csv`;
     const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
     const fileExtension = '.xlsx';
 
@@ -96,10 +98,11 @@ const dataTable = ({
                 pagination={true}
                 persistTableHead
                 expandableRows
-                defaultSortAsc={false}
+                defaultSortAsc={defaultSortField !== null || defaultSortField !== undefined? true : false}
                 conditionalRowStyles={conditionalRowStyles}
                 expandableRowsComponent={expandableRow}
                 customStyles={customStyles}
+                defaultSortField={defaultSortField}
             />
         </div >
     );

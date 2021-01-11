@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'https://covid-19-278f1-default-rtdb.firebaseio.com'; // Default base url for all axios request
+const baseURL = 'https://covidglobaltracking-default-rtdb.firebaseio.com/'; // Default base url for all axios request
 
 axios.interceptors.response.use(res => res, error => {
     // Do something with response error

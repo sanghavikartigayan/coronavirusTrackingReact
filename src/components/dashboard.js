@@ -3,6 +3,7 @@ import Notification from 'react-notify-toast';
 import CountsForDashboard from './countsForDashboard';
 import DeathCountLineChart from './deathCountLineChart';
 import CaseCountLineChart from './caseCountLineChart';
+import OntarioChart from './ontarioChart';
 
 const dashboard = () => {
     return (
@@ -20,7 +21,17 @@ const dashboard = () => {
             </div>
             <div className="row m-4">
                 <div className="col-sm-6">
-                    <h3 className="card-title font-weight-bold">Statistics</h3>
+                    <h3 className="card-title font-weight-bold">Onatrio Statistics</h3>
+                </div>
+            </div>
+            <div className="row m-4">
+                <div className="col-sm-12 col-md-12">
+                    <OntarioChart />
+                </div>
+            </div>
+            <div className="row m-4">
+                <div className="col-sm-6">
+                    <h3 className="card-title font-weight-bold">Global Statistics</h3>
                 </div>
             </div>
             <div className="row m-4">
@@ -31,6 +42,7 @@ const dashboard = () => {
                     <DeathCountLineChart />
                 </div>
             </div>
+            
         </div>
     )
 }

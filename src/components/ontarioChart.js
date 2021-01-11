@@ -1,34 +1,30 @@
 import React, { useState, useEffect } from 'react'
-import { getAllCovidCase } from '../middleware/cases';
+import { getOnatrioRecentCases } from '../middleware/cases';
 import Chart from "chart.js";
 import { connect } from 'react-redux';
+import moment from 'moment';
+// import 'react-date-range/dist/styles.css'; // main style file
+// import 'react-date-range/dist/theme/default.css'; // theme css file
+// import { DateRangePicker } from 'react-date-range';
 
 const $ = window.$;
 
-const caseCountLineChart = ({ onGetAllCovidCase, casesForLastWeek, casesForToday, loading }) => {
+const ontarioChart = ({ onGetOntarioStats, totalCases, loading }) => {
 
     const [lineChart, setLineChart] = useState(null);
     const [numDays, setNumDays] = useState('1');
 
     useEffect(() => {
-        onGetAllCovidCase();
+        onGetOntarioStats();
 
-        let data;
-        let labels;
-
-        if (numDays === '1') {
-            labels = Object.keys(casesForToday);
-            data = Object.keys(casesForToday).map(key => casesForToday[key]);
-        } else {
-            labels = Object.keys(casesForLastWeek);
-            data = Object.keys(casesForLastWeek).map(key => casesForLastWeek[key]);
-        }
+        let labels = totalCases.map(key => moment(key['date']).format('LL'));
+        let data = totalCases.map(key => key['count']);
 
         let areaChartData = {
             labels: labels,
             datasets: [
                 {
-                    label: 'Newly Reported Deaths',
+                    label: labels,
                     backgroundColor: 'rgba(60,141,188,0.9)',
                     borderColor: 'rgba(60,141,188,0.8)',
                     pointRadius: true,
@@ -45,7 +41,7 @@ const caseCountLineChart = ({ onGetAllCovidCase, casesForLastWeek, casesForToday
             maintainAspectRatio: true,
             responsive: true,
             legend: {
-                display: true
+                display: false
             },
             scales: {
                 xAxes: [{
@@ -60,7 +56,7 @@ const caseCountLineChart = ({ onGetAllCovidCase, casesForLastWeek, casesForToday
                 }]
             }
         }
-        var lineChartCanvas = $('#lineChart1').get(0).getContext('2d')
+        var lineChartCanvas = $('#ontarioChart').get(0).getContext('2d')
         var lineChartOptions = Object.assign({}, areaChartOptions)
         var lineChartData = Object.assign({}, areaChartData)
         lineChartData.datasets[0].fill = false;
@@ -71,11 +67,32 @@ const caseCountLineChart = ({ onGetAllCovidCase, casesForLastWeek, casesForToday
             data: lineChartData,
             options: lineChartOptions
         }));
-    }, [numDays, onGetAllCovidCase]);
+    }, [numDays, onGetOntarioStats]);
+
+
+    const handleSelect = (ranges) => {
+        console.log(ranges);
+        // {
+        //   selection: {
+        //     startDate: [native Date Object],
+        //     endDate: [native Date Object],
+        //   }
+        // }
+    }
+
+    // const selectionRange = {
+    //     startDate: new Date(),
+    //     endDate: new Date(),
+    //     key: 'selection',
+    // }
 
     return (
         <div className="card">
             <div className="card-header">
+                {/* <DateRangePicker
+                    ranges={[selectionRange]}
+                    onChange={handleSelect}
+                /> */}
                 <h3 className="card-title">Newly Reported Cases <select onChange={(e) => { lineChart.destroy(); setNumDays(e.target.value); }} style={{ marginLeft: 10, display: 'inline', width: 150 }} className='form-control'>
                     <option value='1'>24 hours</option>
                     <option value='7'>7 days</option>
@@ -89,7 +106,7 @@ const caseCountLineChart = ({ onGetAllCovidCase, casesForLastWeek, casesForToday
                 !loading
                     ?
                     <div id="lineChartContent" className="card-body">
-                        <canvas id="lineChart1" style={{ minHeight: 400, height: 400, width: '100%' }} />
+                        <canvas id="ontarioChart" style={{ minHeight: 400, height: 400, width: '100%' }} />
                     </div>
                     :
                     <div className="card-body">
@@ -101,18 +118,17 @@ const caseCountLineChart = ({ onGetAllCovidCase, casesForLastWeek, casesForToday
 }
 
 function mapStateToProps(state) {
-    const { casesForLastWeek, casesForToday, loading } = state.caseReducer;
+    const { totalCases, loading } = state.ontarioRecentCaseReducer;
     return {
-        casesForLastWeek,
-        casesForToday,
+        totalCases,
         loading
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        onGetAllCovidCase: () => dispatch(getAllCovidCase())
+        onGetOntarioStats: () => dispatch(getOnatrioRecentCases())
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(caseCountLineChart);
+export default connect(mapStateToProps, mapDispatchToProps)(ontarioChart);

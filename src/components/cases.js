@@ -37,6 +37,7 @@ const cases = ({ onGetAllCovidCase, cases, loading, error }) => {
                         columns={columns}
                         pending={loading}
                         totalElements={cases.length}
+                        fileNameForCsvDownload="worldwideData"
                         expandableRow={<ExpandableRow data={cases} />}
                     />
                     : null

@@ -103,7 +103,8 @@ function mapStateToProps(state) {
     const { deathForLastWeek, deathForToday, loading } = state.caseReducer;
     return {
         deathForLastWeek,
-        deathForToday, loading
+        deathForToday,
+        loading
     };
 }
 
