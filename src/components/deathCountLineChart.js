@@ -29,23 +29,23 @@ const deathCountLineChart = ({ onGetAllCovidCase, deathForLastWeek, deathForToda
             datasets: [
                 {
                     label: 'Newly Reported Deaths',
-                    backgroundColor: 'rgba(60,141,188,0.9)',
-                    borderColor: 'rgba(60,141,188,0.8)',
+                    backgroundColor: 'rgba(255, 0, 71,0.9)',
+                    borderColor: 'rgba(255, 0, 71,0.8)',
                     pointRadius: true,
-                    pointColor: '#3b8bba',
-                    pointStrokeColor: 'rgba(60,141,188,1)',
+                    pointColor: '#ff6347',
+                    pointStrokeColor: 'rgba(255, 0, 71, 1)',
                     pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(60,141,188,1)',
+                    pointHighlightStroke: 'rgba(255, 0, 71, 1)',
                     data: data
                 }
             ]
         };
 
         let areaChartOptions = {
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
             responsive: true,
             legend: {
-                display: false
+                display: true
             },
             scales: {
                 xAxes: [{
@@ -64,7 +64,7 @@ const deathCountLineChart = ({ onGetAllCovidCase, deathForLastWeek, deathForToda
         var lineChartOptions = Object.assign({}, areaChartOptions)
         var lineChartData = Object.assign({}, areaChartData)
         lineChartData.datasets[0].fill = false;
-        lineChartOptions.datasetFill = false
+        lineChartOptions.datasetFill = false;
 
         setLineChart(new Chart(lineChartCanvas, {
             type: 'line',

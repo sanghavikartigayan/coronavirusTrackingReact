@@ -42,10 +42,10 @@ const caseCountLineChart = ({ onGetAllCovidCase, casesForLastWeek, casesForToday
         };
 
         let areaChartOptions = {
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
             responsive: true,
             legend: {
-                display: false
+                display: true
             },
             scales: {
                 xAxes: [{
@@ -64,7 +64,7 @@ const caseCountLineChart = ({ onGetAllCovidCase, casesForLastWeek, casesForToday
         var lineChartOptions = Object.assign({}, areaChartOptions)
         var lineChartData = Object.assign({}, areaChartData)
         lineChartData.datasets[0].fill = false;
-        lineChartOptions.datasetFill = false
+        lineChartOptions.datasetFill = false;
 
         setLineChart(new Chart(lineChartCanvas, {
             type: 'line',
