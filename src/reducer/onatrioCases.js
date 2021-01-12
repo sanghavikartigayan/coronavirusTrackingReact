@@ -4,6 +4,8 @@ import { sortByMostRecentDate } from '../utils/index';
 const initialState = {
     ontarioCases: [],
     totalCases: [],
+    totalDeath: [],
+    ontarioRecentValue:[],
     error: false,
     loading: false,
     message: ''
@@ -28,10 +30,23 @@ export default function ontarioRecentCaseReducer(state = initialState, action) {
                 }
             });
 
+            let totalDeath = sortedDataMostRecent.map(c => {
+                return {
+                    'count': c['TotalDeaths'],
+                    'date': c['SummaryDate']
+                }
+            });
+
+            const ontarioRecentValue = sortedDataMostRecent[0];
+
+            console.log(ontarioRecentValue);
+
             return {
                 ...state,
                 ontarioCases: sortedDataMostRecent,
                 totalCases: totalCases,
+                totalDeath: totalDeath,
+                ontarioRecentValue: ontarioRecentValue,
                 loading: false,
                 error: false
             }

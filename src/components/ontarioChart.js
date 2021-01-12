@@ -3,99 +3,121 @@ import { getOnatrioRecentCases } from '../middleware/cases';
 import Chart from "chart.js";
 import { connect } from 'react-redux';
 import moment from 'moment';
-// import 'react-date-range/dist/styles.css'; // main style file
-// import 'react-date-range/dist/theme/default.css'; // theme css file
-// import { DateRangePicker } from 'react-date-range';
 
 const $ = window.$;
 
-const ontarioChart = ({ onGetOntarioStats, totalCases, loading }) => {
+const ontarioChart = ({ onGetOntarioStats, totalCases, totalDeath, loading }) => {
 
     const [lineChart, setLineChart] = useState(null);
-    const [numDays, setNumDays] = useState('1');
+    const [field, setfield] = useState('Cases & Deaths');
 
     useEffect(() => {
         onGetOntarioStats();
 
-        let labels = totalCases.map(key => moment(key['date']).format('LL'));
-        let data = totalCases.map(key => key['count']);
+        console.log('Field : ', field);
 
-        let areaChartData = {
-            labels: labels,
-            datasets: [
-                {
-                    label: labels,
-                    backgroundColor: 'rgba(60,141,188,0.9)',
-                    borderColor: 'rgba(60,141,188,0.8)',
-                    pointRadius: true,
-                    pointColor: '#3b8bba',
-                    pointStrokeColor: 'rgba(60,141,188,1)',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(60,141,188,1)',
-                    data: data
+        if (totalCases && !loading && totalDeath) {
+
+            let label = totalCases.map(key => moment(key['date']).format('MMM Do YY')).slice(0, 20);
+            let caseData = totalCases.map(key => key['count']).slice(0, 20);
+            let deathData = totalDeath.map(key => key['count']).slice(0, 20);
+
+            let areaChartData = {
+                labels: label,
+                datasets: [
+                    {
+                        label: 'Cases',
+                        yAxisID: 'Cases',
+                        hidden: field !== 'Cases & Deaths' && field !== 'Case',
+                        backgroundColor: 'rgba(60,141,188,0.9)',
+                        borderColor: 'rgba(60,141,188,0.8)',
+                        pointColor: '#3b8bba',
+                        pointStrokeColor: 'rgba(60,141,188,1)',
+                        pointHighlightFill: '#fff',
+                        pointHighlightStroke: 'rgba(60,141,188,1)',
+                        fill: false,
+                        pointRadius: 4,
+                        pointHitRadius: 10,
+                        data: caseData
+                    },
+                    {
+                        label: 'Deaths',
+                        yAxisID: 'Deaths',
+                        hidden: field !== 'Cases & Deaths' && field !== 'Death',
+                        backgroundColor: 'rgba(255, 0, 71,0.9)',
+                        borderColor: 'rgba(255, 0, 71,0.8)',
+                        pointColor: '#ff6347',
+                        pointStrokeColor: 'rgba(255, 0, 71, 1)',
+                        pointHighlightFill: '#fff',
+                        pointHighlightStroke: 'rgba(255, 0, 71, 1)',
+                        fill: false,
+                        pointRadius: 4,
+                        pointHitRadius: 10,
+                        data: deathData
+                    }
+                ]
+            };
+
+            let areaChartOptions = {
+                scales: {
+                    yAxes: [
+                        {
+                            scaleLabel: {
+                                display: !(field !== 'Cases & Deaths' && field !== 'Case'),
+                                labelString: 'Cases'
+                            },
+                            position: 'left',
+                            id: 'Cases',
+                            type: 'linear',
+                            ticks: {
+                                min: 0,
+                                beginAtZero: true
+                            }
+                        },
+                        {
+                            scaleLabel: {
+                                display: !(field !== 'Cases & Deaths' && field !== 'Death'),
+                                labelString: 'Deaths'
+                            },
+                            position: 'right',
+                            id: 'Deaths',
+                            type: 'linear',
+                            ticks: {
+                                min: 0,
+                                beginAtZero: true
+                            },
+                            gridLines: {
+                                display: false,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                display: false
+                            }
+                        }
+                    ]
                 }
-            ]
-        };
-
-        let areaChartOptions = {
-            maintainAspectRatio: true,
-            responsive: true,
-            legend: {
-                display: false
-            },
-            scales: {
-                xAxes: [{
-                    gridLines: {
-                        display: true,
-                    }
-                }],
-                yAxes: [{
-                    gridLines: {
-                        display: true,
-                    }
-                }]
             }
+            var lineChartCanvas = $('#ontarioChart').get(0).getContext('2d')
+            var lineChartOptions = Object.assign({}, areaChartOptions)
+            var lineChartData = Object.assign({}, areaChartData)
+            lineChartData.datasets[0].fill = false;
+            lineChartOptions.datasetFill = false;
+
+            setLineChart(new Chart(lineChartCanvas, {
+                type: 'line',
+                data: lineChartData,
+                options: lineChartOptions
+            }));
         }
-        var lineChartCanvas = $('#ontarioChart').get(0).getContext('2d')
-        var lineChartOptions = Object.assign({}, areaChartOptions)
-        var lineChartData = Object.assign({}, areaChartData)
-        lineChartData.datasets[0].fill = false;
-        lineChartOptions.datasetFill = false;
-
-        setLineChart(new Chart(lineChartCanvas, {
-            type: 'line',
-            data: lineChartData,
-            options: lineChartOptions
-        }));
-    }, [numDays, onGetOntarioStats]);
-
-
-    const handleSelect = (ranges) => {
-        console.log(ranges);
-        // {
-        //   selection: {
-        //     startDate: [native Date Object],
-        //     endDate: [native Date Object],
-        //   }
-        // }
-    }
-
-    // const selectionRange = {
-    //     startDate: new Date(),
-    //     endDate: new Date(),
-    //     key: 'selection',
-    // }
+    }, [onGetOntarioStats, loading, field]);
 
     return (
         <div className="card">
             <div className="card-header">
-                {/* <DateRangePicker
-                    ranges={[selectionRange]}
-                    onChange={handleSelect}
-                /> */}
-                <h3 className="card-title">Newly Reported Cases <select onChange={(e) => { lineChart.destroy(); setNumDays(e.target.value); }} style={{ marginLeft: 10, display: 'inline', width: 150 }} className='form-control'>
-                    <option value='1'>24 hours</option>
-                    <option value='7'>7 days</option>
+                <h3 className="card-title">Newly Reported <select onChange={(e) => { setfield(e.target.value); }} style={{ marginLeft: 10, display: 'inline', width: 180 }} className='form-control'>
+                    <option value='Cases & Deaths'>Cases & Deaths</option>
+                    <option value='Case'>Case only</option>
+                    <option value='Death'>Death only</option>
                 </select></h3>
                 <div className="card-tools">
                     <button type="button" className="btn btn-tool" data-card-widget="collapse"><i className="fas fa-minus" />
@@ -106,7 +128,7 @@ const ontarioChart = ({ onGetOntarioStats, totalCases, loading }) => {
                 !loading
                     ?
                     <div id="lineChartContent" className="card-body">
-                        <canvas id="ontarioChart" style={{ minHeight: 400, height: 400, width: '100%' }} />
+                        <canvas id="ontarioChart" style={{ minHeight: 300, height: 300, width: '100%' }} />
                     </div>
                     :
                     <div className="card-body">
@@ -118,10 +140,11 @@ const ontarioChart = ({ onGetOntarioStats, totalCases, loading }) => {
 }
 
 function mapStateToProps(state) {
-    const { totalCases, loading } = state.ontarioRecentCaseReducer;
+    const { totalCases, totalDeath, loading } = state.ontarioRecentCaseReducer;
     return {
         totalCases,
-        loading
+        loading,
+        totalDeath
     };
 }
 

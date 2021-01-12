@@ -13,65 +13,66 @@ const deathCountLineChart = ({ onGetAllCovidCase, deathForLastWeek, deathForToda
     useEffect(() => {
         onGetAllCovidCase();
 
-        let data;
-        let labels;
+        if (deathForLastWeek && !loading && deathForToday) {
+            let data;
+            let labels = deathForToday.map(key => key['name']).slice(0, 20);
 
-        if (numDays === '1') {
-            labels = Object.keys(deathForToday);
-            data = Object.keys(deathForToday).map(key => deathForToday[key]);
-        } else {
-            labels = Object.keys(deathForLastWeek);
-            data = Object.keys(deathForLastWeek).map(key => deathForLastWeek[key]);
-        }
-
-        let areaChartData = {
-            labels: labels,
-            datasets: [
-                {
-                    label: 'Newly Reported Deaths',
-                    backgroundColor: 'rgba(255, 0, 71,0.9)',
-                    borderColor: 'rgba(255, 0, 71,0.8)',
-                    pointRadius: true,
-                    pointColor: '#ff6347',
-                    pointStrokeColor: 'rgba(255, 0, 71, 1)',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(255, 0, 71, 1)',
-                    data: data
-                }
-            ]
-        };
-
-        let areaChartOptions = {
-            maintainAspectRatio: true,
-            responsive: true,
-            legend: {
-                display: true
-            },
-            scales: {
-                xAxes: [{
-                    gridLines: {
-                        display: true,
-                    }
-                }],
-                yAxes: [{
-                    gridLines: {
-                        display: true,
-                    }
-                }]
+            if (numDays === '1') {
+                data = deathForToday.map(key => key['count']).slice(0, 20);
+            } else {
+                data = deathForLastWeek.map(key => key['count']).slice(0, 20);
             }
-        }
-        var lineChartCanvas = $('#lineChart2').get(0).getContext('2d')
-        var lineChartOptions = Object.assign({}, areaChartOptions)
-        var lineChartData = Object.assign({}, areaChartData)
-        lineChartData.datasets[0].fill = false;
-        lineChartOptions.datasetFill = false;
 
-        setLineChart(new Chart(lineChartCanvas, {
-            type: 'line',
-            data: lineChartData,
-            options: lineChartOptions
-        }));
-    }, [numDays, onGetAllCovidCase]);
+            let areaChartData = {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Newly Reported Deaths',
+                        backgroundColor: 'rgba(255, 0, 71,0.9)',
+                        borderColor: 'rgba(255, 0, 71,0.8)',
+                        pointColor: '#ff6347',
+                        pointStrokeColor: 'rgba(255, 0, 71, 1)',
+                        pointHighlightFill: '#fff',
+                        pointHighlightStroke: 'rgba(255, 0, 71, 1)',
+                        pointRadius: 4,
+                        pointHitRadius: 10,
+                        data: data
+                    }
+                ]
+            };
+
+            let areaChartOptions = {
+                maintainAspectRatio: true,
+                responsive: true,
+                legend: {
+                    display: true
+                },
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            display: true,
+                        }
+                    }],
+                    yAxes: [{
+                        gridLines: {
+                            display: true,
+                        }
+                    }]
+                }
+            }
+            var lineChartCanvas = $('#lineChart2').get(0).getContext('2d')
+            var lineChartOptions = Object.assign({}, areaChartOptions)
+            var lineChartData = Object.assign({}, areaChartData)
+            lineChartData.datasets[0].fill = false;
+            lineChartOptions.datasetFill = false;
+
+            setLineChart(new Chart(lineChartCanvas, {
+                type: 'line',
+                data: lineChartData,
+                options: lineChartOptions
+            }));
+        }
+    }, [numDays, onGetAllCovidCase, loading]);
 
     return (
         <div className="card">

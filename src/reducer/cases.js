@@ -24,13 +24,34 @@ export default function caseReducer(state = initialState, action) {
 
             const globalValue = action.payload.filter(c => c['Name'] === 'Global');
 
-            const casesForLastWeek = action.payload.map(c => c['Cases - newly reported in last 7 days']);
+            const casesForLastWeek = action.payload.map(c => {
+                return {
+                    'count': c['Cases - newly reported in last 7 days'],
+                    'name': c['Name']
+                }
+            });
 
-            const casesForToday = action.payload.map(c => c['Cases - newly reported in last 24 hours']);
+            const casesForToday = action.payload.map(c => {
+                return {
+                    'count': c['Cases - newly reported in last 24 hours'],
+                    'name': c['Name']
+                }
+            });
 
-            const deathForLastWeek = action.payload.map(c => c['Deaths - newly reported in last 7 days']);
+            
+            const deathForLastWeek = action.payload.map(c => {
+                return {
+                    'count': c['Deaths - newly reported in last 7 days'],
+                    'name': c['Name']
+                }
+            });
 
-            const deathForToday = action.payload.map(c => c['Deaths - newly reported in last 24 hours']);
+            const deathForToday = action.payload.map(c => {
+                return {
+                    'count': c['Deaths - newly reported in last 24 hours'],
+                    'name': c['Name']
+                }
+            });
 
             return {
                 ...state,

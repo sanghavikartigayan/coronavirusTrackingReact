@@ -26,3 +26,18 @@ export function sortByMostRecentDate(array) {
         return dateB - dateA;
     });
 }
+
+export function getDemoUser() {
+    return {
+        iss: 'Performance Auto Group',
+        sub: 'login',
+        employee: {
+            firstName: 'Test',
+            lastName: 'User',
+            email: `test.user@gmail.com`,
+            isActive: true
+        },
+        iat: new Date().getTime(),
+        exp: new Date(Date.now() + 1000 * 60 * 60 * 24).getTime()
+    }
+}
