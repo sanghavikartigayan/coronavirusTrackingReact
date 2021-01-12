@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import UserIcon from '../assets/blue-covid-banner.jpg';
 
 const sidebar = (props) => {
 
