@@ -14,7 +14,7 @@ const sidebar = (props) => {
         <aside className="main-sidebar sidebar-dark-primary elevation-4">
             {/* Brand Logo */}
             <a href="/" className="brand-link">
-                <img src={UserIcon} alt="AdminLTE Logo" className="brand-image img-circle elevation-2" />
+                <img src={require('../assets/blue-covid-banner.jpg')} alt="AdminLTE Logo" className="brand-image img-circle elevation-2" />
                 <span className="brand-text font-weight-light ml-3">Coronavirus</span>
             </a>
             {/* Sidebar */}
