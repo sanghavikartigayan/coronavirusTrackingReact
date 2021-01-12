@@ -3,37 +3,29 @@ import { getOnatrioRecentCases } from '../middleware/cases';
 import Chart from "chart.js";
 import { connect } from 'react-redux';
 import moment from 'moment';
-//import DatePicker from "react-datepicker";
-// import './ontarioChart.css';
-import 'react-date-range/dist/styles.css'; // main style file
-import 'react-date-range/dist/theme/default.css'; // theme css file
-import { DateRangePicker } from 'react-date-range';
+// import 'react-date-range/dist/styles.css'; // main style file
+// import 'react-date-range/dist/theme/default.css'; // theme css file
+// import { DateRangePicker } from 'react-date-range';
 
 const $ = window.$;
 
 const ontarioChart = ({ onGetOntarioStats, totalCases, totalDeath, ontarioEndValue, ontarioRecentValue, loading }) => {
 
     const [lineChart, setLineChart] = useState(null);
-    const [filteredTotalCases, setFilteredTotalCases] = useState(totalCases);
-    const [filteredTotalDeath, setFilteredTotalDeath] = useState(totalDeath);
     const [field, setfield] = useState('Cases & Deaths');
-    // const [val, setVal] = useState(new Date());
-    const [startDate, setStartDate] = useState(new Date(ontarioEndValue['SummaryDate']));
-    const [endDate, setEndDate] = useState(new Date(ontarioRecentValue['SummaryDate']));
-    const [showCalendar, setShowCalendar] = useState(false);
+    // const [startDate, setStartDate] = useState(new Date(ontarioEndValue['SummaryDate']));
+    // const [endDate, setEndDate] = useState(new Date(ontarioRecentValue['SummaryDate']));
+    // const [showCalendar, setShowCalendar] = useState(false);
 
     useEffect(() => {
         onGetOntarioStats();
 
         if (totalCases && !loading && totalDeath && ontarioRecentValue && ontarioEndValue) {
 
-            // let label = totalCases.map(key => moment(key['date']).format('MMM Do YY')).slice(0, 20);
             let label = totalCases.map(key => moment(key['date']).format('MMM Do YY')).slice(0, 20);
             let caseData = totalCases.map(key => key['count']).slice(0, 20);
             let deathData = totalDeath.map(key => key['count']).slice(0, 20);
-
-            console.log('Filtered Data ', totalCases.filter(el => { return new Date(el['date']) >= endDate && new Date(el['date']) <= startDate }));
-
+    
             let areaChartData = {
                 labels: label,
                 datasets: [
@@ -118,19 +110,18 @@ const ontarioChart = ({ onGetOntarioStats, totalCases, totalDeath, ontarioEndVal
                 options: lineChartOptions
             }));
         }
-    }, [onGetOntarioStats, loading, field]);
+    }, [loading, field, onGetOntarioStats]);
 
-    const handleSelect = (ranges) => {
-        setStartDate(ranges.selection.startDate);
-        setEndDate(ranges.selection.endDate);
-    }
+    // const handleSelect = (ranges) => {
+    //     setStartDate(ranges.selection.startDate);
+    //     setEndDate(ranges.selection.endDate);
+    // }
 
-    const selectionRange = {
-        startDate: startDate,
-        endDate: endDate,
-        key: 'selection',
-    }
-
+    // const selectionRange = {
+    //     startDate: startDate,
+    //     endDate: endDate,
+    //     key: 'selection',
+    // }
 
     return (
         <div className="card">
@@ -140,7 +131,7 @@ const ontarioChart = ({ onGetOntarioStats, totalCases, totalDeath, ontarioEndVal
                     <option value='Case'>Case only</option>
                     <option value='Death'>Death only</option>
                 </select></h3>
-                {
+                {/* {
                     startDate !== undefined && endDate !== undefined
                         ?
                         <div className='col-md-12 text-center'>
@@ -161,7 +152,7 @@ const ontarioChart = ({ onGetOntarioStats, totalCases, totalDeath, ontarioEndVal
                             }} />
                         :
                         null
-                }
+                } */}
                 <div className="card-tools">
                     <button type="button" className="btn btn-tool" data-card-widget="collapse"><i className="fas fa-minus" />
                     </button>
