@@ -50,7 +50,7 @@ const sidebar = (props) => {
                         </li> */}
                         <li className="nav-item">
                             <Link to={`/ontarioStats`}>
-                                <div style={{ color: '#c2c7d0' }} className={`nav-link ${ selectedTab === '/login' ? 'active' : '' }`}>
+                                <div style={{ color: '#c2c7d0' }} className={`nav-link ${ selectedTab === '/ontarioStats' ? 'active' : '' }`}>
                                     <i className="nav-icon fas fa-city" />
                                     <p> Onatrio </p>
                                 </div>
