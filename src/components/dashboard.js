@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Notification from 'react-notify-toast';
 import CountsForDashboard from './globalValuesForDashboard';
 import DeathCountLineChart from './deathCountLineChart';

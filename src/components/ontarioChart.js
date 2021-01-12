@@ -14,10 +14,12 @@ const $ = window.$;
 const ontarioChart = ({ onGetOntarioStats, totalCases, totalDeath, ontarioEndValue, ontarioRecentValue, loading }) => {
 
     const [lineChart, setLineChart] = useState(null);
+    const [filteredTotalCases, setFilteredTotalCases] = useState(totalCases);
+    const [filteredTotalDeath, setFilteredTotalDeath] = useState(totalDeath);
     const [field, setfield] = useState('Cases & Deaths');
     // const [val, setVal] = useState(new Date());
-    const [startDate, setStartDate] = useState(ontarioRecentValue['SummaryDate']);
-    const [endDate, setEndDate] = useState(ontarioEndValue['SummaryDate']);
+    const [startDate, setStartDate] = useState(new Date(ontarioEndValue['SummaryDate']));
+    const [endDate, setEndDate] = useState(new Date(ontarioRecentValue['SummaryDate']));
     const [showCalendar, setShowCalendar] = useState(false);
 
     useEffect(() => {
@@ -25,11 +27,12 @@ const ontarioChart = ({ onGetOntarioStats, totalCases, totalDeath, ontarioEndVal
 
         if (totalCases && !loading && totalDeath && ontarioRecentValue && ontarioEndValue) {
 
+            // let label = totalCases.map(key => moment(key['date']).format('MMM Do YY')).slice(0, 20);
             let label = totalCases.map(key => moment(key['date']).format('MMM Do YY')).slice(0, 20);
             let caseData = totalCases.map(key => key['count']).slice(0, 20);
             let deathData = totalDeath.map(key => key['count']).slice(0, 20);
 
-            console.log(startDate, endDate);
+            console.log('Filtered Data ', totalCases.filter(el => { return new Date(el['date']) >= endDate && new Date(el['date']) <= startDate }));
 
             let areaChartData = {
                 labels: label,
@@ -98,9 +101,6 @@ const ontarioChart = ({ onGetOntarioStats, totalCases, totalDeath, ontarioEndVal
                             gridLines: {
                                 display: false,
                                 drawBorder: false
-                            },
-                            ticks: {
-                                display: false
                             }
                         }
                     ]
@@ -123,14 +123,6 @@ const ontarioChart = ({ onGetOntarioStats, totalCases, totalDeath, ontarioEndVal
     const handleSelect = (ranges) => {
         setStartDate(ranges.selection.startDate);
         setEndDate(ranges.selection.endDate);
-
-        console.log(ranges);
-        // {
-        //   selection: {
-        //     startDate: [native Date Object],
-        //     endDate: [native Date Object],
-        //   }
-        // }
     }
 
     const selectionRange = {
@@ -139,7 +131,6 @@ const ontarioChart = ({ onGetOntarioStats, totalCases, totalDeath, ontarioEndVal
         key: 'selection',
     }
 
-    console.log('Filtered Data ', totalCases.filter(el => { return el['date'] >= endDate && el['date'] <= startDate }));
 
     return (
         <div className="card">
@@ -149,24 +140,28 @@ const ontarioChart = ({ onGetOntarioStats, totalCases, totalDeath, ontarioEndVal
                     <option value='Case'>Case only</option>
                     <option value='Death'>Death only</option>
                 </select></h3>
-                <div className='col-md-12 text-center'>
-                    <button onClick={() => setShowCalendar(!showCalendar)} className='btn btn-primary'>Show Date Filter</button>
-                </div>
-                {showCalendar ?
-                    <DateRangePicker
-                        ranges={[selectionRange]}
-                        onChange={handleSelect}
-                        theme={{
-                            Calendar: { width: 200 },
-                            PredefinedRanges: { marginLeft: 10, marginTop: 10 }
-                        }} />
-                    : null}
-                {/* <DatePicker
-                    className='form-control'
-                    selected={val}
-                    onChange={e => setVal(e)}
-                    withPortal={true}
-                /> */}
+                {
+                    startDate !== undefined && endDate !== undefined
+                        ?
+                        <div className='col-md-12 text-center'>
+                            <button onClick={() => setShowCalendar(!showCalendar)} className='btn btn-primary'>Show Date Filter</button>
+                        </div>
+                        :
+                        null
+                }
+                {
+                    showCalendar
+                        ?
+                        <DateRangePicker
+                            ranges={[selectionRange]}
+                            onChange={handleSelect}
+                            theme={{
+                                Calendar: { width: 200 },
+                                PredefinedRanges: { marginLeft: 10, marginTop: 10 }
+                            }} />
+                        :
+                        null
+                }
                 <div className="card-tools">
                     <button type="button" className="btn btn-tool" data-card-widget="collapse"><i className="fas fa-minus" />
                     </button>

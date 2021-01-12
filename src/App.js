@@ -9,8 +9,6 @@ import {
 } from "react-router-dom";
 
 import Homepage from './components/homepage';
-import Login from './components/login';
-import ProtectedRoute from './components/utils/protectedRoute';
 
 var firebaseConfig = {
   apiKey: "AIzaSyBxlBMd1yTZI1rojkquGAaGoyvviFs1-fY",
@@ -29,12 +27,9 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path='/login'>
-            <Login />
-          </Route>
-          <ProtectedRoute path="/">
+          <Route path="/">
             <Homepage />
-          </ProtectedRoute>
+          </Route>
         </Switch>
       </BrowserRouter>
     );
