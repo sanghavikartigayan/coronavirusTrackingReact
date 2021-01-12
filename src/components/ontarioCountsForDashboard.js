@@ -9,8 +9,6 @@ const ontarioCountsForDashboard = ({ onGetOntarioStats, ontarioRecentValue, erro
         onGetOntarioStats();
     }, [onGetOntarioStats]);
 
-    console.log('In component',ontarioRecentValue);
-
     return (   
             <div className="row">
                 <div className="col-12 col-sm-6 col-md-3">

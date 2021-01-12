@@ -3,24 +3,33 @@ import { getOnatrioRecentCases } from '../middleware/cases';
 import Chart from "chart.js";
 import { connect } from 'react-redux';
 import moment from 'moment';
+//import DatePicker from "react-datepicker";
+// import './ontarioChart.css';
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+import { DateRangePicker } from 'react-date-range';
 
 const $ = window.$;
 
-const ontarioChart = ({ onGetOntarioStats, totalCases, totalDeath, loading }) => {
+const ontarioChart = ({ onGetOntarioStats, totalCases, totalDeath, ontarioEndValue, ontarioRecentValue, loading }) => {
 
     const [lineChart, setLineChart] = useState(null);
     const [field, setfield] = useState('Cases & Deaths');
+    // const [val, setVal] = useState(new Date());
+    const [startDate, setStartDate] = useState(ontarioRecentValue['SummaryDate']);
+    const [endDate, setEndDate] = useState(ontarioEndValue['SummaryDate']);
+    const [showCalendar, setShowCalendar] = useState(false);
 
     useEffect(() => {
         onGetOntarioStats();
 
-        console.log('Field : ', field);
-
-        if (totalCases && !loading && totalDeath) {
+        if (totalCases && !loading && totalDeath && ontarioRecentValue && ontarioEndValue) {
 
             let label = totalCases.map(key => moment(key['date']).format('MMM Do YY')).slice(0, 20);
             let caseData = totalCases.map(key => key['count']).slice(0, 20);
             let deathData = totalDeath.map(key => key['count']).slice(0, 20);
+
+            console.log(startDate, endDate);
 
             let areaChartData = {
                 labels: label,
@@ -111,6 +120,27 @@ const ontarioChart = ({ onGetOntarioStats, totalCases, totalDeath, loading }) =>
         }
     }, [onGetOntarioStats, loading, field]);
 
+    const handleSelect = (ranges) => {
+        setStartDate(ranges.selection.startDate);
+        setEndDate(ranges.selection.endDate);
+
+        console.log(ranges);
+        // {
+        //   selection: {
+        //     startDate: [native Date Object],
+        //     endDate: [native Date Object],
+        //   }
+        // }
+    }
+
+    const selectionRange = {
+        startDate: startDate,
+        endDate: endDate,
+        key: 'selection',
+    }
+
+    console.log('Filtered Data ', totalCases.filter(el => { return el['date'] >= endDate && el['date'] <= startDate }));
+
     return (
         <div className="card">
             <div className="card-header">
@@ -119,11 +149,30 @@ const ontarioChart = ({ onGetOntarioStats, totalCases, totalDeath, loading }) =>
                     <option value='Case'>Case only</option>
                     <option value='Death'>Death only</option>
                 </select></h3>
+                <div className='col-md-12 text-center'>
+                    <button onClick={() => setShowCalendar(!showCalendar)} className='btn btn-primary'>Show Date Filter</button>
+                </div>
+                {showCalendar ?
+                    <DateRangePicker
+                        ranges={[selectionRange]}
+                        onChange={handleSelect}
+                        theme={{
+                            Calendar: { width: 200 },
+                            PredefinedRanges: { marginLeft: 10, marginTop: 10 }
+                        }} />
+                    : null}
+                {/* <DatePicker
+                    className='form-control'
+                    selected={val}
+                    onChange={e => setVal(e)}
+                    withPortal={true}
+                /> */}
                 <div className="card-tools">
                     <button type="button" className="btn btn-tool" data-card-widget="collapse"><i className="fas fa-minus" />
                     </button>
                 </div>
             </div>
+
             {
                 !loading
                     ?
@@ -140,11 +189,13 @@ const ontarioChart = ({ onGetOntarioStats, totalCases, totalDeath, loading }) =>
 }
 
 function mapStateToProps(state) {
-    const { totalCases, totalDeath, loading } = state.ontarioRecentCaseReducer;
+    const { totalCases, totalDeath, loading, ontarioEndValue, ontarioRecentValue } = state.ontarioRecentCaseReducer;
     return {
         totalCases,
         loading,
-        totalDeath
+        totalDeath,
+        ontarioRecentValue,
+        ontarioEndValue
     };
 }
 
