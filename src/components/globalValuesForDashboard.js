@@ -43,7 +43,7 @@ const globalValuesForDashboard = ({ onGetAllCovidCase, globalValue, error, loadi
                 <div className="info-box elevation-2">
                     <span className="info-box-icon bg-info p-2 m-1"><i className="fas fa-bell"></i></span>
                     <div className="info-box-content">
-                        <span className="info-box-text">Newly reported Case to today</span>
+                        <span className="info-box-text">Newly reported Cases Today</span>
                         <span className="info-box-number">
                             <h3>
                                 {(globalValue['Cases - newly reported in last 24 hours'] && globalValue['Cases - newly reported in last 24 hours'] !== null) ? numberWithCommas(globalValue['Cases - newly reported in last 24 hours']) : '0'}
@@ -58,7 +58,7 @@ const globalValuesForDashboard = ({ onGetAllCovidCase, globalValue, error, loadi
                 <div className="info-box elevation-2">
                     <span className="info-box-icon bg-danger p-2 m-1"><i className="fas fa-frown"></i></span>
                     <div className="info-box-content">
-                        <span className="info-box-text">Newly reported Death to today</span>
+                        <span className="info-box-text">Newly reported Deaths Today</span>
                         <span className="info-box-number">
                             <h3>
                                 {(globalValue['Deaths - newly reported in last 24 hours'] && globalValue['Deaths - newly reported in last 24 hours'] !== null) ? numberWithCommas(globalValue['Deaths - newly reported in last 24 hours']) : '0'}
