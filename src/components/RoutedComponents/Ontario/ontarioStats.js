@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import Notification from 'react-notify-toast';
-import { getOnatrioRecentCases } from '../middleware/cases';
+import { getOnatrioRecentCases } from '../../../middleware/cases';
 import { connect } from 'react-redux';
-import DataTable from './dataTable';
+import DataTable from '../dataTable';
 import ExpandableRow from './ontarioExpandableRow';
 import moment from 'moment';
 

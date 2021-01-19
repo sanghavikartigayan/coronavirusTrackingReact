@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import Notification from 'react-notify-toast';
-import { getAllCovidCase } from '../middleware/cases';
+import { getAllCovidCase } from '../../../middleware/cases';
 import { connect } from 'react-redux';
-import DataTable from './dataTable';
+import DataTable from '../dataTable';
 import ExpandableRow from './expandableRow';
 
 const cases = ({ onGetAllCovidCase, cases, loading, error }) => {

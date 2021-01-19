@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getOnatrioRecentCases } from '../middleware/cases';
+import { getOnatrioRecentCases } from '../../../middleware/cases';
 import Chart from "chart.js";
 import { connect } from 'react-redux';
 import moment from 'moment';

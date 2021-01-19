@@ -1,8 +1,8 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom';
-import Dashboard from './dashboard';
-import Cases from './cases';
-import OntarioStats from './ontarioStats';
+import Dashboard from './Dashboard/dashboard';
+import Cases from './RoutedComponents/Global/cases';
+import OntarioStats from './RoutedComponents/Ontario/ontarioStats';
 
 const Router = () => {
     return (

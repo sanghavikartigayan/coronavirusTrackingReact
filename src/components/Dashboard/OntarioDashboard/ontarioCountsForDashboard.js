@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
-import { getOnatrioRecentCases } from '../middleware/cases';
-import { numberWithCommas } from '../utils/index';
+import { getOnatrioRecentCases } from '../../../middleware/cases';
+import { numberWithCommas } from '../../../utils/index';
 
 const ontarioCountsForDashboard = ({ onGetOntarioStats, ontarioRecentValue, error, loading }) => {
 

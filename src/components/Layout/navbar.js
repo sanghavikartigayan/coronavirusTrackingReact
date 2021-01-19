@@ -12,7 +12,7 @@ const navbar = () => {
       <ul className="navbar-nav ml-auto">
         <li className="nav-item dropdown">
           <button className="nav-link btn btn-link" data-toggle="dropdown">
-            <img src={require('../assets/userimage.png')}  alt="User Avatar" className="img-circle mr-3" width="30" />
+            <img src={require('../../assets/userimage.png')}  alt="User Avatar" className="img-circle mr-3" width="30" />
           </button>
           <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <span className="dropdown-header text-muted">Name</span>

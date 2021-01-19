@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
-import { getAllCovidCase } from '../middleware/cases';
-import { numberWithCommas } from '../utils/index';
+import { getAllCovidCase } from '../../../middleware/cases';
+import { numberWithCommas } from '../../../utils/index';
 
 const globalValuesForDashboard = ({ onGetAllCovidCase, globalValue, error, loading }) => {
 

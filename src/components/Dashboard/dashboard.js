@@ -1,10 +1,10 @@
 import React from 'react';
 import Notification from 'react-notify-toast';
-import CountsForDashboard from './globalValuesForDashboard';
-import DeathCountLineChart from './deathCountLineChart';
-import CaseCountLineChart from './caseCountLineChart';
-import OntarioChart from './ontarioChart';
-import OntarioCountsForDashboard from './ontarioCountsForDashboard';
+import CountsForDashboard from './GlobalDashboard/globalValuesForDashboard';
+import DeathCountLineChart from './GlobalDashboard/deathCountLineChart';
+import CaseCountLineChart from './GlobalDashboard/caseCountLineChart';
+import OntarioChart from './OntarioDashboard/ontarioChart';
+import OntarioCountsForDashboard from './OntarioDashboard/ontarioCountsForDashboard';
 
 const dashboard = () => {
 

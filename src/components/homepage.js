@@ -1,6 +1,6 @@
 import React from 'react';
-import Navbar from './navbar';
-import Sidebar from './sidebar';
+import Navbar from './Layout/navbar';
+import Sidebar from './Layout/sidebar';
 import Router from './router';
 
 const homePage = () => {
