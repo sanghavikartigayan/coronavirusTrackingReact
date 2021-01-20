@@ -6,7 +6,7 @@ const initialState = {
     totalCases: [],
     totalDeath: [],
     ontarioRecentValue:[],
-    ontarioEndValue: [],
+    ontarioStartValue: [],
     error: false,
     loading: false,
     message: ''
@@ -39,7 +39,7 @@ export default function ontarioRecentCaseReducer(state = initialState, action) {
             });
 
             const ontarioRecentValue = sortedDataMostRecent[0];
-            const ontarioEndValue = sortedDataMostRecent.slice(-1)[0];
+            const ontarioStartValue = sortedDataMostRecent.slice(-1)[0];
 
             return {
                 ...state,
@@ -47,7 +47,7 @@ export default function ontarioRecentCaseReducer(state = initialState, action) {
                 totalCases: totalCases,
                 totalDeath: totalDeath,
                 ontarioRecentValue: ontarioRecentValue,
-                ontarioEndValue: ontarioEndValue,
+                ontarioStartValue: ontarioStartValue,
                 loading: false,
                 error: false
             }
