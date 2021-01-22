@@ -115,27 +115,27 @@ const ontarioChart = ({ onGetOntarioStats, totalCases, totalDeath, ontarioStartV
         }
     }, [loading, field, onGetOntarioStats]);
 
-    useEffect(() => {
-        totalCases = totalCases.filter(c => {
-            var date = Date.parse(c['date']);
-            var startingDate = Date.parse(startDate);
-            var endingDate = Date.parse(endDate);
+    // useEffect(() => {
+    //     totalCases = totalCases.filter(c => {
+    //         var date = Date.parse(c['date']);
+    //         var startingDate = Date.parse(startDate);
+    //         var endingDate = Date.parse(endDate);
 
-            return (date >= startingDate && date <= endingDate);
-        });
+    //         return (date >= startingDate && date <= endingDate);
+    //     });
 
-        console.log('totalCases : ', totalCases);
+    //     console.log('totalCases : ', totalCases);
 
-        totalDeath = totalDeath.filter(c => {
-            var date = Date.parse(c['date']);
-            var startingDate = Date.parse(startDate);
-            var endingDate = Date.parse(endDate);
+    //     totalDeath = totalDeath.filter(c => {
+    //         var date = Date.parse(c['date']);
+    //         var startingDate = Date.parse(startDate);
+    //         var endingDate = Date.parse(endDate);
 
-            return (date >= startingDate && date <= endingDate);
-        });
+    //         return (date >= startingDate && date <= endingDate);
+    //     });
 
-        console.log('totalDeath : ', totalDeath);
-    }, [startDate, endDate]);
+    //     console.log('totalDeath : ', totalDeath);
+    // }, [startDate, endDate]);
 
     const handleSelect = (ranges) => {
         setStartDate(new Date(ranges.selection.startDate));
@@ -157,7 +157,7 @@ const ontarioChart = ({ onGetOntarioStats, totalCases, totalDeath, ontarioStartV
                     <option value='Case'>Case only</option>
                     <option value='Death'>Death only</option>
                 </select></h3>
-                {
+                {/* {
                     startDate !== undefined && endDate !== undefined
                         ?
                         <div className='col-md-12 text-center'>
@@ -178,7 +178,7 @@ const ontarioChart = ({ onGetOntarioStats, totalCases, totalDeath, ontarioStartV
                             }} />
                         :
                         null
-                }
+                } */}
                 <div className="card-tools">
                     <button type="button" className="btn btn-tool" data-card-widget="collapse"><i className="fas fa-minus" />
                     </button>
